@@ -1,4 +1,4 @@
-# gal-language-support README
+# gal-language-support 
 
 Gal Language syntax highlighter
 
