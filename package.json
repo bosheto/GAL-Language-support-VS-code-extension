@@ -1,0 +1,25 @@
+{
+  "name": "gal-language-support",
+  "displayName": "GAL Language support",
+  "description": "Syntax support for GAL language",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.109.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "gal",
+      "aliases": ["GAL", "gal"],
+      "extensions": [".gs",".gh"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "gal",
+      "scopeName": "source.gal",
+      "path": "./syntaxes/gal.tmLanguage.json"
+    }]
+  }
+}
