@@ -2,7 +2,8 @@
   "name": "gal-language-support",
   "displayName": "GAL Language support",
   "description": "Syntax support for GAL language",
-  "version": "0.0.1",
+  "version": "0.2.0",
+  "repository": {"url": "https://github.com/bosheto/GAL-Language-support-VS-code-extension.git"},
   "engines": {
     "vscode": "^1.109.0"
   },

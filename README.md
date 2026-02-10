@@ -12,7 +12,14 @@ Highlight know syntax keywords.
 
 ## Release Notes
 
-Release 0.1.0 - initial release
+
+Release 0.2.0 - Updates to # operations, functions and variables
+
+### 0.2.0
+
+Fixed highlighting in #define #include and similar, 
+added variable name highlighting,
+Added highlighting for function definitions, 
 
 ### 0.1.0
 

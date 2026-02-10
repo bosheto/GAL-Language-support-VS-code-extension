@@ -3,6 +3,27 @@
 	"name": "GAL",
 	"patterns": [
 		{
+			"include": "#preprocessor"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#function-definition"
+		},
+		{
+			"include": "#variable-definition"
+		},
+		{
+			"include": "#variable-usage"
+		},
+		{
+			"include": "#operators"
+		},
+		{
+			"include": "#function-calls"
+		},
+		{
 			"include": "#keywords"
 		},
 		{
@@ -10,98 +31,204 @@
 		}
 	],
 	"repository": {
+		"preprocessor": {
+			"patterns": [
+				{
+					"name": "meta.preprocessor.include.gal",
+					"begin": "^\\s*(#)\\s*(include)\\b",
+					"end": "$",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control.directive.gal"
+						},
+						"2": {
+							"name": "keyword.control.directive.gal"
+						}
+					},
+					"patterns": [
+						{
+							"name": "string.quoted.double.include.gal",
+							"match": "\"[^\"]*\""
+						},
+						{
+							"name": "string.quoted.other.lt-gt.include.gal",
+							"match": "<[^>]*>"
+						}
+					]
+				},
+				{
+					"name": "meta.preprocessor.macro.gal",
+					"begin": "^\\s*(#)\\s*(define)\\b",
+					"end": "$",
+					"beginCaptures": {
+						"1": {
+							"name": "keyword.control.directive.gal"
+						},
+						"2": {
+							"name": "keyword.control.directive.gal"
+						}
+					},
+					"patterns": [
+						{
+							"name": "entity.name.function.preprocessor.gal",
+							"match": "\\b[A-Z_][A-Z0-9_]*\\b"
+						},
+						{
+							"name": "constant.numeric.gal",
+							"match": "\\b[0-9]+\\b"
+						},
+						{
+							"include": "#strings"
+						}
+					]
+				},
+				{
+					"name": "meta.preprocessor.gal",
+					"match": "^\\s*(#)\\s*(defined|elif|else|endif|error|if|ifdef|ifndef|pragma|undef)\\b",
+					"captures": {
+						"1": {
+							"name": "keyword.control.directive.gal"
+						},
+						"2": {
+							"name": "keyword.control.directive.gal"
+						}
+					}
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.double-slash.gal",
+					"match": "//.*$"
+				},
+				{
+					"name": "comment.block.gal",
+					"begin": "/\\*",
+					"end": "\\*/"
+				}
+			]
+		},
 		"operators": {
 			"patterns": [
 				{
-				"name": "keyword.operator.word.gal",
-				"match": "\\b(DeepCopy|ShallowCopy|Compare|javanew|javaclassmethod|javainstanceof)\\b"
+					"name": "keyword.operator.word.gal",
+					"match": "\\b(DeepCopy|ShallowCopy|Compare|javanew|javaclassmethod|javainstanceof)\\b"
 				},
 				{
-				"name": "keyword.operator.ellipsis.gal",
-				"match": "\\.{3}"
+					"name": "keyword.operator.ellipsis.gal",
+					"match": "\\.{3}"
 				},
 				{
-				"name": "keyword.operator.logical.gal",
-				"match": "\\|\\||&&"
+					"name": "keyword.operator.logical.gal",
+					"match": "\\|\\||&&"
 				},
 				{
-				"name": "keyword.operator.comparison.gal",
-				"match": "==|!=|<=|>=|::|!:|<|>"
+					"name": "keyword.operator.comparison.gal",
+					"match": "==|!=|<=|>=|::|!:|<|>"
 				},
 				{
-				"name": "keyword.operator.bitwise.gal",
-				"match": "<<|>>|\\^|\\||&|~"
+					"name": "keyword.operator.bitwise.gal",
+					"match": "<<|>>|\\^|\\||&|~"
 				},
 				{
-				"name": "keyword.operator.increment.gal",
-				"match": "\\+\\+|--"
+					"name": "keyword.operator.increment.gal",
+					"match": "\\+\\+|--"
 				},
 				{
-				"name": "keyword.operator.assignment.gal",
-				"match": ":=|\\+=|-=|\\*=|/=|%=|<<=|>>=|&&=|\\^=|\\|="
+					"name": "keyword.operator.assignment.gal",
+					"match": ":=|\\+=|-=|\\*=|/=|%=|<<=|>>=|&&=|\\^=|\\|="
 				},
 				{
-				"name": "keyword.operator.arithmetic.gal",
-				"match": "\\+|-|\\*|/|%"
+					"name": "keyword.operator.arithmetic.gal",
+					"match": "\\+|-|\\*|/|%"
 				},
 				{
-				"name": "keyword.operator.logical.gal",
-				"match": "!"
+					"name": "keyword.operator.logical.gal",
+					"match": "!"
 				}
 			]
+		},
+		"function-definition": {
+	"patterns": [
+		{
+			"name": "meta.function.gal",
+			"begin": "^\\s*(\\.\\w+)?\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(:)\\s*(\\{)",
+			"end": "\\}",
+			"beginCaptures": {
+				"1": {"name": "storage.type.gal"},
+				"2": {"name": "entity.name.function.gal"},
+				"3": {"name": "punctuation.separator.gal"},
+				"4": {"name": "punctuation.section.block.begin.gal"}
 			},
-		"function-declaration": {
+			"endCaptures": {
+				"0": {"name": "punctuation.section.block.end.gal"}
+			},
 			"patterns": [
 				{
-				"name": "meta.function.gal",
-				"begin": "^\\s*(\\.\\w+)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*(:)\\s*(\\{)",
-				"end": "\\}",
-				"beginCaptures": {
-					"1": {"name": "storage.type.gal"},
-					"2": {"name": "entity.name.function.gal"},
-					"3": {"name": "punctuation.separator.gal"},
-					"4": {"name": "punctuation.section.block.begin.gal"}
-				},
-				"endCaptures": {
-					"0": {"name": "punctuation.section.block.end.gal"}
-				},
-				"patterns": [
-					{
 					"include": "#comments"
-					},
-					{
+				},
+				{
+					"include": "#variable-usage"
+				},
+				{
+					"include": "#operators"
+				},
+				{
 					"include": "#keywords"
-					},
-					{
+				},
+				{
 					"include": "#strings"
-					}
-				]
+				},
+				{
+					"include": "#function-calls"
 				}
 			]
-			},
+		}
+	]
+},
+		"variable-usage": {
+			"patterns": [
+				{
+					"name": "variable.other.gal",
+					"match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?==)"
+				}
+			]
+		},
+		"variable-definition": {
+			"patterns": [
+				{
+					"name": "meta.variable.gal",
+					"match": "^\\s*(\\.\\w+)\\s+([a-zA-Z_][a-zA-Z0-9_]*)\\s*(;)",
+					"captures": {
+						"1": {
+							"name": "storage.type.gal"
+						},
+						"2": {
+							"name": "variable.other.gal"
+						},
+						"3": {
+							"name": "punctuation.terminator.gal"
+						}
+					}
+				}
+			]
+		},
+		"function-calls": {
+			"patterns": [
+				{
+					"name": "entity.name.function.gal",
+					"match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()"
+				}
+			]
+		},
 		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.gal",
-				"match": "\\b(AFTER|BEFORE|CLASS|DESCRIPTION|EXTENDEDPARMS|FALSE_OBJ|GALOBJECT|GLOBAL|GLOBALS|IMPLEMENTS|INIT|METHODS|NULL_OBJ|New|PARMS|SUPER|TRUE_OBJ|VARS|__cdecl|__far|__huge|__near|__pascal|__stdcall|_cdecl|_far|_huge|_near|_pascal|auto|break|case|cdecl|char|const|continue|creturn|default|do|double|else|enum|extern|externdll|far|float|for|goto|if|int|intern|interrupt|javalastexception|javamethod|long|near|new|newinst|nobreak|nosuper|pascal|register|return|self|short|signed|sizeof|static|struct|super|switch|typedef|union|unsigned|void|volatile|while|String|boolean|Object)\\b"
-			},
-			{
-				"name": "keyword.control.gal",
-				"match": "\\b(define|defined|elif|else|endif|error|if|ifdef|ifndef|include|pragma|undef)\\b"
-			},
-			{
-				"name": "comment.line.double-slash.gal",
-				"match": "//.*$"
-			},
-			{
-				"name": "comment.block.gal",
-				"begin": "/\\*",
-				"end": "\\*/"
-			},
-			{
-				"name": "entity.name.function.gal",
-          		"match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()"
-			}	
-		]
+			"patterns": [
+				{
+					"name": "keyword.control.gal",
+					"match": "\\b(AFTER|BEFORE|CLASS|DESCRIPTION|EXTENDEDPARMS|FALSE_OBJ|GALOBJECT|GLOBAL|GLOBALS|IMPLEMENTS|INIT|METHODS|NULL_OBJ|New|PARMS|SUPER|TRUE_OBJ|VARS|__cdecl|__far|__huge|__near|__pascal|__stdcall|_cdecl|_far|_huge|_near|_pascal|auto|break|case|cdecl|char|const|continue|creturn|default|do|double|else|enum|extern|externdll|far|float|for|goto|if|int|intern|interrupt|javalastexception|javamethod|long|near|new|newinst|nobreak|nosuper|pascal|register|return|self|short|signed|sizeof|static|struct|super|switch|typedef|union|unsigned|void|volatile|while|String|boolean|Object)\\b"
+				}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.gal",
