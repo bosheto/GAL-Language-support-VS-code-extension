@@ -149,44 +149,6 @@
 				}
 			]
 		},
-		"function-definition": {
-	"patterns": [
-		{
-			"name": "meta.function.gal",
-			"begin": "^\\s*(\\.\\w+)?\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(:)\\s*(\\{)",
-			"end": "\\}",
-			"beginCaptures": {
-				"1": {"name": "storage.type.gal"},
-				"2": {"name": "entity.name.function.gal"},
-				"3": {"name": "punctuation.separator.gal"},
-				"4": {"name": "punctuation.section.block.begin.gal"}
-			},
-			"endCaptures": {
-				"0": {"name": "punctuation.section.block.end.gal"}
-			},
-			"patterns": [
-				{
-					"include": "#comments"
-				},
-				{
-					"include": "#variable-usage"
-				},
-				{
-					"include": "#operators"
-				},
-				{
-					"include": "#keywords"
-				},
-				{
-					"include": "#strings"
-				},
-				{
-					"include": "#function-calls"
-				}
-			]
-		}
-	]
-},
 		"variable-usage": {
 			"patterns": [
 				{
@@ -211,6 +173,57 @@
 							"name": "punctuation.terminator.gal"
 						}
 					}
+				}
+			]
+		},
+		"function-definition": {
+			"patterns": [
+				{
+					"name": "meta.function.gal",
+					"begin": "^\\s*(\\.\\w+)?\\s*(?!(VARS|PARMS|METHODS|INIT|CLASS|GLOBAL|GLOBALS)\\b)([a-zA-Z_][a-zA-Z0-9_]*)\\s*(:)\\s*(\\{)",
+					"end": "\\}",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.type.gal"
+						},
+						"3": {
+							"name": "entity.name.function.gal"
+						},
+						"4": {
+							"name": "punctuation.separator.gal"
+						},
+						"5": {
+							"name": "punctuation.section.block.begin.gal"
+						}
+					},
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.section.block.end.gal"
+						}
+					},
+					"patterns": [
+						{
+							"include": "#comments"
+						},
+						{
+							"include": "#variable-definition"
+						},
+						{
+							"include": "#variable-usage"
+						},
+						{
+							"include": "#operators"
+						},
+						{
+							"include": "#keywords"
+						},
+						{
+							"include": "#strings"
+						},
+						{
+							"include": "#function-calls"
+						}
+					]
 				}
 			]
 		},
